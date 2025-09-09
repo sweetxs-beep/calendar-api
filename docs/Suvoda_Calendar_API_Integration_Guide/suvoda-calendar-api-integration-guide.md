@@ -12,7 +12,7 @@ For example, you can create a “Cristina Costea Interview” event on the team 
 
 - **GET** `/users/me/calendarList` - Returns the calendars on the user's calendar list
 - **POST** `/calendars/{calendarId}/events` — Create an event  
-- **GET** `calendars/{calendarId}/events` - Returns events on the specified calendar
+- **GET** `/calendars/{calendarId}/events` - Returns events on the specified calendar
 - **GET** `/calendars/{calendarId}/events/{eventId}` — Retrieve an event  
 - **PATCH** `/calendars/{calendarId}/events/{eventId}` — Update (modifies only specified fields)  
 - **GET** `/colors` — Returns the color definitions for calendars and events 
@@ -184,10 +184,10 @@ If you don’t know the `eventId`, first list or search events to locate it.
 **Example request**
 
 ```bash
-curl "https://www.googleapis.com/calendar/v3/calendars/your-team-cal@group.calendar.google.com/events?q=Project%20Kickoff&timeMin=2025-09-01T00:00:00Z&timeMax=2025-09-30T23:59:59Z&singleEvents=true&maxResults=5" \
+curl "https://www.googleapis.com/calendar/v3/calendars/your-team-cal@group.calendar.google.com/events?q=Cristina%20Costea%20Interview&timeMin=2025-09-01T00:00:00Z&timeMax=2025-09-30T23:59:59Z&singleEvents=true&maxResults=5" \
   -H "Authorization: Bearer $TOKEN"
 ```
-This request searches for a particular event, based on the `eventId`, inside the `your-team-cal@group.calendar.google.com` calendar. 
+This request searches for a particular event, based on the summary of the event (Cristina Costea Interview), in the interval of September 1, 2025 00:00 and September 30, 2025 23:59 inside the `your-team-cal@group.calendar.google.com` calendar. In case there are multiple events matching the filters, a `maxResults` of 5 events will be listed. 
 
 **Example JSON response**
 ```json
@@ -208,7 +208,7 @@ This request searches for a particular event, based on the `eventId`, inside the
 }
 ```
 :::tip Note: 
-Take note of the `id` (event ID) → `evt_123`, `etag` → `"3912345678900"` and existing `attendees`. 
+Take note of the `id` (event ID) → `evt_123` and existing `attendees`. 
 :::
 
 ### 2. Add an attendee to the event
@@ -218,10 +218,8 @@ Take note of the `id` (event ID) → `evt_123`, `etag` → `"3912345678900"` and
 Add a new attendee to an existing event.  
 
 :::tip Note: 
-When updating attendees, you must send the **entire updated list** (existing + new). `PATCH` replaces the full `attendees` array.
+When updating attendees, you must send the **entire updated list** (existing and new). `PATCH` replaces the full `attendees` array.
 :::  
-
----
 
 **Path parameters**
 | Name        | Type   | Description |
@@ -234,7 +232,6 @@ When updating attendees, you must send the **entire updated list** (existing + n
 |-------------|--------|-------------|
 | `attendees` | array  | Full list of attendees. This array replaces the existing one. |
 
----
 
 **Example request**
 
